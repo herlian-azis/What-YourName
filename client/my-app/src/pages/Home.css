@@ -1,0 +1,10 @@
+body{
+    background-image: url(
+        "https://i.pinimg.com/originals/aa/a3/16/aaa31665072b8b180dfba07058f5067f.jpg");
+    height: 100%; 
+
+  /* Center and scale the image nicely */
+  /* background-position: center; */
+  background-repeat: no-repeat;
+  background-size: cover;
+}
