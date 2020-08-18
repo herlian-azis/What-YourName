@@ -114,7 +114,7 @@ const ModalEdit = (props) => {
                         <TextField value={input.title} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="title" label="Title" />
                         <TextField value={input.overview} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="overview" label="Overview" />
                         <TextField value={input.poster_path} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="poster_path" label="Poster_Path" />
-                        <TextField value={input.popularity} type='number' onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="popularity" label="Popularity" />
+                        <TextField min="0" rowsMax="1" value={input.popularity} type='number' onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="popularity" label="Popularity" />
                         <div>
                             <Select
                                 isMulti

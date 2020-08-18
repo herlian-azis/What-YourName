@@ -1,6 +1,9 @@
 import React from 'react'
-import { Card, Button } from 'react-bootstrap'
+import { Card, } from 'react-bootstrap'
 import{useHistory} from 'react-router-dom'
+import Button from '@material-ui/core/Button';
+import DetailsIcon from '@material-ui/icons/Details';
+
 
 
 
@@ -27,7 +30,8 @@ const CardComponent = (props) => {
                     {/* <Card.Text>
                        {data.overview}
     </Card.Text> */}
-                    <Button variant="primary" onClick={goToDetail}>See Detail</Button>
+                        
+                    <Button startIcon={<DetailsIcon />} variant="outlined" color="primary" onClick={goToDetail}>See Detail</Button>
                    
                 </Card.Body>
             </Card>

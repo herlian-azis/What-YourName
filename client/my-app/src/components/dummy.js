@@ -1,7 +1,9 @@
 export const flavourOptions = [
-    { value: 'vanilla', label: 'Vanilla', rating: 'safe' },
-    { value: 'chocolate', label: 'Chocolate', rating: 'good' },
-    { value: 'strawberry', label: 'Strawberry', rating: 'wild' },
-    { value: 'salted-caramel', label: 'Salted Caramel', rating: 'crazy' },
+    { value: 'horror', label: 'horror', rating: 'safe' },
+    { value: 'comedy', label: 'comedy', rating: 'good' },
+    { value: 'drama', label: 'drama', rating: 'wild' },
+    { value: 'romance', label: 'romance', rating: 'crazy' },
+    { value: 'animation', label: 'animation', rating: 'crazy' },
+    { value: 'thriller', label: 'thriller', rating: 'crazy' },
   ];
   
