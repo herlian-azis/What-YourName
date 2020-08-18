@@ -36,6 +36,8 @@ const Movies = () => {
                 movie={currentPage}
                 ces={ces}
                 onHide={() => setModalShow(false)} />
+
+
             <Container>
             <div className="clearfix mt-5 mb-3">
                 <h4 className="float-left text-light">Movies</h4>
@@ -51,7 +53,7 @@ const Movies = () => {
                             <Col md={3} className='mb-5'>
                                 <Card
                                     onPages={page => rowEvents(page)}
-                                    key={movie.id} idx={idx} data={movie} />
+                                    key={idx} idx={idx} data={movie} />
                             </Col>
                         )
                     })}

@@ -92,17 +92,19 @@ const ModalEdit = (props) => {
         e.preventDefault()
 
 
-        if (input.title == "" ||
-            input.overview == "" ||
-            input.popularity == "" ||
-            input.poster_path == "" ||
-            input.tags == []) {
+        if (input.title === "" ||
+            input.overview === "" ||
+            input.popularity === "" ||
+            input.poster_path === "" ||
+            input.tags === []) {
             setAlert(true);
         } else {
 
             updateMovie({
                 variables: { id: props.movie.id, update: input }
             })
+            props.onHide()
+
         }
     }
 

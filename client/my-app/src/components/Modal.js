@@ -62,12 +62,12 @@ const ModalForm = (props) => {
     console.log(input)
     const goSubmit = (e) => {
         e.preventDefault()
-        if (input.title == "" ||
-            input.overview == "" ||
-            input.popularity == "" ||
-            input.poster_path == "" ||
-            input.tags == []) {
-                console.log('cek')
+        if (input.title === "" ||
+            input.overview === "" ||
+            input.popularity === "" ||
+            input.poster_path === "" ||
+            input.tags === []) {
+                // console.log('cek')
             setAlert(true);
         } else {
             addMovie({
@@ -75,6 +75,7 @@ const ModalForm = (props) => {
                     newMovie: input
                 }
             })
+            props.onHide()
         }
     }
 
@@ -96,6 +97,7 @@ const ModalForm = (props) => {
                 <Modal.Body>
                     <center>
                         {alert ? <Alert severity="error">All Fields Are Required!</Alert> : null}
+
                         <form className={classes.root} onSubmit={(e) => goSubmit(e)} >
                             <TextField value={input.title} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="title" label="Title" />
                             <TextField onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="overview" label="Overview" />
@@ -113,6 +115,7 @@ const ModalForm = (props) => {
                                     onChange={onChange}
                                 />
                             </div>
+
                             <Button style={{ width: '50x' }} type="submit" >
                                 submit
                         </Button>
