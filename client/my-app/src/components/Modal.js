@@ -1,15 +1,13 @@
 import React, { useState, createRef } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { useMutation } from '@apollo/client';
-import { ADD_MOVIE } from '../querys/GetMovies'
+import { ADD_MOVIE, GET_MOVIES } from '../querys/GetMovies'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { flavourOptions } from './dummy'
-// import { Alert } from '@material-ui/lab';
-import Alert from '@material-ui/lab/Alert';
-import AlertTitle from '@material-ui/lab/AlertTitle';
+import { Alert } from '@material-ui/lab';
 
 const animatedComponents = makeAnimated();
 
@@ -25,12 +23,13 @@ const useStyles = makeStyles((theme) => ({
 const ModalForm = (props) => {
     const wrapper = createRef()
     const classes = useStyles();
+    const [alert, setAlert] = useState(false);
     const [addMovie, { data, loading, error }] = useMutation(ADD_MOVIE, {
-        // refetchQueries:[
-        //     {
-        //         query:GET_MOVIES
-        //     }
-        // ]
+        refetchQueries:[
+            {
+                query:GET_MOVIES
+            }
+        ]
     })
 
     const [input, setInput] = useState({
@@ -40,6 +39,7 @@ const ModalForm = (props) => {
         popularity: "",
         tags: []
     })
+
     const onChange = (e) => {
         console.log(e)
         if (Array.isArray(e)) {
@@ -59,25 +59,23 @@ const ModalForm = (props) => {
         }
     }
 
+    console.log(input)
     const goSubmit = (e) => {
-
-        if (input.title == "") {
-
-         const  validasi = () => {
-                return (
-                    <div className={classes.root}>
-
-                        <Alert severity="error">This is an error alert — check it out!</Alert>
-                    </div>
-                )
-            }
-        }
         e.preventDefault()
-        addMovie({
-            variables: {
-                newMovie: input
-            }
-        })
+        if (input.title == "" ||
+            input.overview == "" ||
+            input.popularity == "" ||
+            input.poster_path == "" ||
+            input.tags == []) {
+                console.log('cek')
+            setAlert(true);
+        } else {
+            addMovie({
+                variables: {
+                    newMovie: input
+                }
+            })
+        }
     }
 
 
@@ -97,8 +95,7 @@ const ModalForm = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <center>
-                        {/* {validasi} */}
-                        <h4>Centered Modal</h4>
+                        {alert ? <Alert severity="error">All Fields Are Required!</Alert> : null}
                         <form className={classes.root} onSubmit={(e) => goSubmit(e)} >
                             <TextField value={input.title} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="title" label="Title" />
                             <TextField onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="overview" label="Overview" />
@@ -116,7 +113,7 @@ const ModalForm = (props) => {
                                     onChange={onChange}
                                 />
                             </div>
-                            <Button style={{ width: '50x' }} type="submit">
+                            <Button style={{ width: '50x' }} type="submit" >
                                 submit
                         </Button>
                         </form>

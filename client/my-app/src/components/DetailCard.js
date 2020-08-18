@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, {  } from 'react'
 import './DetailCard.css'
 // import DeleteIcon from '@material-ui/icons/Delete';
 import ModalEdit from '../components/ModalEdit'
-import { DELETE_MOVIE } from '../querys/GetMovies'
+import { DELETE_MOVIE,GET_MOVIES } from '../querys/GetMovies'
 import { useMutation } from '@apollo/client'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { green, red, purple } from '@material-ui/core/colors';
@@ -37,17 +37,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 const DetailCard = (props) => {
     const classes = useStyles();
-
+    const history = useHistory()
     const data = props.data
     const [modalShow, setModalShow] = React.useState(false);
-    const [deleted] = useMutation(DELETE_MOVIE)
-    console.log(data.id)
+    const [deleted] = useMutation(DELETE_MOVIE,{
+        refetchQueries:[
+            {
+                query:GET_MOVIES
+            }
+        ]})
+    // console.log(data.id)
 
     console.log(props.data.__typename)
     const deleteMovie = () => {
         deleted({
             variables: { id: data.id }
         })
+        history.push('/movies')
     }
     const handleModal = () => {
         if (props.data.__typename == 'Movie') {

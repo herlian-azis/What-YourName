@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Select from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { flavourOptions } from './dummy'
+import { Alert } from '@material-ui/lab';
 
 const animatedComponents = makeAnimated();
 
@@ -23,17 +24,19 @@ const ModalEdit = (props) => {
     console.log(props.movie.title)
     const wrapper = createRef()
     const classes = useStyles();
+    const [alert, setAlert] = useState(false);
+
     // const [addMovie, { data, loading, error }] = useMutation(ADD_MOVIE, {
-        // refetchQueries:[
-        //     {
-        //         query:GET_MOVIES
-        //     }
-        // ]
+    // refetchQueries:[
+    //     {
+    //         query:GET_MOVIES
+    //     }
+    // ]
     // })
-    const [updateMovie, { error:errorUpdate }] = useMutation(UPDATE_MOVIE, {
-        refetchQueries:[
+    const [updateMovie, { error: errorUpdate }] = useMutation(UPDATE_MOVIE, {
+        refetchQueries: [
             {
-                query:GET_MOVIES
+                query: GET_MOVIES
             }
         ]
     })
@@ -88,9 +91,19 @@ const ModalEdit = (props) => {
     const goSubmit = (e) => {
         e.preventDefault()
 
-        updateMovie({
-            variables:{id: props.movie.id, update:input}
-        })
+
+        if (input.title == "" ||
+            input.overview == "" ||
+            input.popularity == "" ||
+            input.poster_path == "" ||
+            input.tags == []) {
+            setAlert(true);
+        } else {
+
+            updateMovie({
+                variables: { id: props.movie.id, update: input }
+            })
+        }
     }
 
     return (
@@ -109,32 +122,37 @@ const ModalEdit = (props) => {
           </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <h4>Edit Data</h4>
-                    <form className={classes.root} onSubmit={(e) => goSubmit(e)} >
-                        <TextField value={input.title} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="title" label="Title" />
-                        <TextField value={input.overview} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="overview" label="Overview" />
-                        <TextField value={input.poster_path} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="poster_path" label="Poster_Path" />
-                        <TextField min="0" rowsMax="1" value={input.popularity} type='number' onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="popularity" label="Popularity" />
-                        <div>
-                            <Select
-                                isMulti
-                                name="tags"
-                                options={flavourOptions}
-                                closeMenuOnSelect={false}
-                                components={animatedComponents}
-                                className="basic-multi-select"
-                                classNamePrefix="select"
-                                defaultValue={generateTag()}
-                                onChange={onChange}
-                            />
-                        </div>
-                        <Button type="submit">
-                            submit
+                    <center>
+
+                        {alert ? <Alert severity="error">All Fields Are Required!</Alert> : null}
+                        <h4>Edit Data</h4>
+                        <form className={classes.root} onSubmit={(e) => goSubmit(e)} >
+                            <TextField value={input.title} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="title" label="Title" />
+                            <TextField value={input.overview} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="overview" label="Overview" />
+                            <TextField value={input.poster_path} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="poster_path" label="Poster_Path" />
+                            <TextField min="0" rowsMax="1" value={input.popularity} type='number' onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="popularity" label="Popularity" />
+                            <div>
+                                <Select
+                                    isMulti
+                                    name="tags"
+                                    options={flavourOptions}
+                                    closeMenuOnSelect={false}
+                                    components={animatedComponents}
+                                    className="basic-multi-select"
+                                    classNamePrefix="select"
+                                    defaultValue={generateTag()}
+                                    onChange={onChange}
+                                />
+                            </div>
+                            <Button type="submit">
+                                submit
                         </Button>
-                    </form>
+                        </form>
+                    </center>
+
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={props.onHide}>Close</Button>
+                    {/* <Button onClick={props.onHide}>Close</Button> */}
                 </Modal.Footer>
             </Modal>
         </div>
