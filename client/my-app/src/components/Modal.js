@@ -41,7 +41,6 @@ const ModalForm = (props) => {
     })
 
     const onChange = (e) => {
-        console.log(e)
         if (Array.isArray(e)) {
             let newTags = []
             e.map(tag => {
@@ -59,7 +58,6 @@ const ModalForm = (props) => {
         }
     }
 
-    console.log(input)
     const goSubmit = (e) => {
         e.preventDefault()
         if (input.title === "" ||
@@ -99,7 +97,7 @@ const ModalForm = (props) => {
                         {alert ? <Alert severity="error">All Fields Are Required!</Alert> : null}
 
                         <form className={classes.root} onSubmit={(e) => goSubmit(e)} >
-                            <TextField value={input.title} onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="title" label="Title" />
+                            <TextField onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="title" label="Title" />
                             <TextField onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="overview" label="Overview" />
                             <TextField onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="poster_path" label="Poster_Path" />
                             <TextField type='number' onChange={onChange} margin="normal" style={{ margin: 10 }} id="standard-full-width" name="popularity" label="Popularity" />

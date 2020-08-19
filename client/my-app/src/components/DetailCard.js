@@ -1,14 +1,14 @@
-import React, {  } from 'react'
-import { MuiThemeProvider, createMuiTheme ,makeStyles} from '@material-ui/core/styles'
-import { DELETE_MOVIE,GET_MOVIES } from '../querys/GetMovies'
-import {  useHistory } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
+import { MuiThemeProvider, createMuiTheme, makeStyles } from '@material-ui/core/styles'
+import { DELETE_MOVIE, GET_MOVIES } from '../querys/GetMovies'
+import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import Button from '@material-ui/core/Button';
 import { green, red, purple } from '@material-ui/core/colors';
 import './DetailCard.css'
 import ModalEdit from '../components/ModalEdit'
 // import DeleteIcon from '@material-ui/icons/Delete';
-import FavoritesCache,{GET_FAVORITES} from '../querys/FavoritesCache'
+import FavoritesCache, { GET_FAVORITES } from '../querys/FavoritesCache'
 const theme = createMuiTheme({
     palette: {
         primary: green,
@@ -39,35 +39,51 @@ const DetailCard = (props) => {
     const classes = useStyles();
     const history = useHistory()
     const data = props.data
-    const [modalShow, setModalShow] = React.useState(false);
-    const [deleted] = useMutation(DELETE_MOVIE,{
-        refetchQueries:[
+    const [modalShow, setModalShow] = useState(false);
+    const [fav, setFavo] = useState([])
+    const [deleted] = useMutation(DELETE_MOVIE, {
+        refetchQueries: [
             {
-                query:GET_MOVIES
+                query: GET_MOVIES
             }
-        ]})
-    // console.log(data.id)
+        ]
+    })
+    const { favorites: currentFavorite } = FavoritesCache.readQuery({
+        query: GET_FAVORITES
+    })
+   
 
-    // console.log(props.data.__typename)
+
     const deleteMovie = () => {
         deleted({
             variables: { id: data.id }
         })
         history.push('/movies')
     }
-    const addFav = ()=>{
-        const {favorites:currentFavorite} = FavoritesCache.readQuery({
-            query:GET_FAVORITES
-        })
+    
 
-        // console.log(currentFavorite)
+    useEffect(() => {
+        setFavo(currentFavorite)
+    }, [currentFavorite])
+
+
+
+
+    const addFav = () => {
+      
         FavoritesCache.writeQuery({
-            query:GET_FAVORITES,
-            data:{
-                favorites:[...currentFavorite,data]
+            query: GET_FAVORITES,
+            data: {
+                favorites: [...fav, data]
             }
         })
     }
+
+    let handleFav = []
+     fav.map(checkFav => {
+        handleFav.push( checkFav.id)
+    })
+
     const handleModal = () => {
         if (props.data.__typename == 'Movie') {
 
@@ -80,9 +96,11 @@ const DetailCard = (props) => {
                                 ...styles.buttonBlue
                             }} onClick={() => setModalShow(true)}>Edit</Button>
                             <Button variant="contained" color="secondary" onClick={() => deleteMovie()}>Delete</Button>
-                            <Button variant="contained" style={{
-                                ...styles.button
-                            }} onClick={() => addFav()}>Favorite</Button>
+                            <Button
+                                disabled={handleFav.includes(data.id)}
+                                variant="contained" style={{
+                                    ...styles.button
+                                }} onClick={() => addFav()}>Favorite</Button>
                         </div>
                     </MuiThemeProvider>
 
@@ -104,7 +122,7 @@ const DetailCard = (props) => {
                             <span className="card-author-detail subtle">{data.tags + ""}</span>
                             <h2 className="card-title-detail">{data.title}</h2>
                             <span className="card-description-detail subtle">{data.overview}</span>
-                            <div  className="mb-4">Rating: {data.popularity}/10</div>
+                            <div className="mb-4">Rating: {data.popularity}/10</div>
                             {handleModal()}
                             {/* <span className=" card-circle-detail subtle">{data.popularity}</span> */}
                         </div>

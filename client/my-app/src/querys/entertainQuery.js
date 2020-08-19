@@ -8,7 +8,7 @@ query GetAll {
         poster_path
         popularity
         tags
-        
+        overview
       }
       movies{
       title,

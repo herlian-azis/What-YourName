@@ -1,8 +1,9 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import Footer from './components/Footer'
 import client from './config/client'
-import {Home,Series,Movies,Detail,Favorites} from './pages'
+import { Home, Series, Movies, Detail, Favorites } from './pages'
 import { ApolloProvider } from '@apollo/client'
 import Navbar from './components/Navbar'
 import { BrowserRouter as Router, Route, NavLink, Switch } from 'react-router-dom'
@@ -11,7 +12,7 @@ function App() {
     <div>
       <ApolloProvider client={client}>
         <Router>
-          <Navbar/>
+          <Navbar />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/series" component={Series} />
@@ -21,6 +22,8 @@ function App() {
 
 
           </Switch>
+        
+          <Footer />
         </Router>
 
       </ApolloProvider>

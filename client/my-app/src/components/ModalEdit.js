@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 const ModalEdit = (props) => {
-    console.log(props.movie.title)
     const wrapper = createRef()
     const classes = useStyles();
     const [alert, setAlert] = useState(false);
