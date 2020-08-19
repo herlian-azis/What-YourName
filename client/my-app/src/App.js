@@ -2,7 +2,7 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import client from './config/client'
-import {Home,Series,Movies,Detail} from './pages'
+import {Home,Series,Movies,Detail,Favorites} from './pages'
 import { ApolloProvider } from '@apollo/client'
 import Navbar from './components/Navbar'
 import { BrowserRouter as Router, Route, NavLink, Switch } from 'react-router-dom'
@@ -17,6 +17,7 @@ function App() {
             <Route exact path="/series" component={Series} />
             <Route exact path="/movies" component={Movies} />
             <Route exact path="/detail/:id" component={Detail} />
+            <Route exact path="/favorites" component={Favorites} />
 
 
           </Switch>

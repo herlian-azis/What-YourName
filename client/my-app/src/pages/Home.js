@@ -2,13 +2,14 @@ import React from 'react'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import Card from '../components/Card'
 import { useQuery } from '@apollo/client';
 import { GET_ALL_DATA } from '../querys/entertainQuery';
 import { Col, Container } from 'react-bootstrap'
 import { Link, useHistory } from 'react-router-dom'
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 import Button from '@material-ui/core/Button';
+import Card2 from '../components/Card'
+
 
 
 import './Home.css'
@@ -40,27 +41,29 @@ const Home = () => {
         <div >
 
             <Container>
-                <div className="clearfix mt-5 mb-3">
-                    <h4 className="float-left text-light">Movies</h4>
-                    <Button
-                        variant="contained"
-                        startIcon={<FindInPageIcon />}
-                        className="float-right text-uppercase " onClick={() => goMovies()}
-                    >
+                <div>
+                    <div className="clearfix mt-5 mb-3">
+                        <h4 className="float-left text-light">Movies</h4>
+                        <Button
+                            variant="contained"
+                            startIcon={<FindInPageIcon />}
+                            className="float-right text-uppercase " onClick={() => goMovies()}
+                        >
 
-                        See All
+                            See All
                      </Button>
 
+                    </div>
+                    <Slider {...settings}>
+                        {data.movies.map((movie, idx) => {
+                            return (
+                                <Col  >
+                                    <Card2 key={idx} idx={idx} data={movie}/>
+                                </Col>
+                            )
+                        })}
+                    </Slider>
                 </div>
-                <Slider {...settings}>
-                    {data.movies.map((movie, idx) => {
-                        return (
-                            <Col md={3} className='mb-1' >
-                                <Card key={idx} idx={idx} data={movie}></Card>
-                            </Col>
-                        )
-                    })}
-                </Slider>
 
                 <div>
                     <div className="clearfix mt-5 mb-3">
@@ -82,7 +85,7 @@ const Home = () => {
                             return (
                                 <React.Fragment>
                                     <Col >
-                                        <Card key={idx} idx={idx} data={serie}></Card>
+                                        <Card2 key={idx} idx={idx} data={serie}/>
                                     </Col>
                                 </React.Fragment>
                             )

@@ -1,14 +1,14 @@
 import React, {  } from 'react'
-import './DetailCard.css'
-// import DeleteIcon from '@material-ui/icons/Delete';
-import ModalEdit from '../components/ModalEdit'
+import { MuiThemeProvider, createMuiTheme ,makeStyles} from '@material-ui/core/styles'
 import { DELETE_MOVIE,GET_MOVIES } from '../querys/GetMovies'
+import {  useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
-import { useLocation, useHistory } from 'react-router-dom'
-import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { green, red, purple } from '@material-ui/core/colors';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import './DetailCard.css'
+import ModalEdit from '../components/ModalEdit'
+// import DeleteIcon from '@material-ui/icons/Delete';
+import FavoritesCache,{GET_FAVORITES} from '../querys/FavoritesCache'
 const theme = createMuiTheme({
     palette: {
         primary: green,
@@ -48,12 +48,25 @@ const DetailCard = (props) => {
         ]})
     // console.log(data.id)
 
-    console.log(props.data.__typename)
+    // console.log(props.data.__typename)
     const deleteMovie = () => {
         deleted({
             variables: { id: data.id }
         })
         history.push('/movies')
+    }
+    const addFav = ()=>{
+        const {favorites:currentFavorite} = FavoritesCache.readQuery({
+            query:GET_FAVORITES
+        })
+
+        // console.log(currentFavorite)
+        FavoritesCache.writeQuery({
+            query:GET_FAVORITES,
+            data:{
+                favorites:[...currentFavorite,data]
+            }
+        })
     }
     const handleModal = () => {
         if (props.data.__typename == 'Movie') {
@@ -69,7 +82,7 @@ const DetailCard = (props) => {
                             <Button variant="contained" color="secondary" onClick={() => deleteMovie()}>Delete</Button>
                             <Button variant="contained" style={{
                                 ...styles.button
-                            }} onClick={() => deleteMovie()}>Favorite</Button>
+                            }} onClick={() => addFav()}>Favorite</Button>
                         </div>
                     </MuiThemeProvider>
 

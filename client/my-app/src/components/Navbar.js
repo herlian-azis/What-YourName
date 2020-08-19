@@ -1,6 +1,6 @@
 import React from 'react'
 import {Navbar,Nav} from 'react-bootstrap'
-import { Link ,useHistory } from "react-router-dom"
+import { Link  } from "react-router-dom"
 
 
 export default () => {
@@ -14,6 +14,7 @@ export default () => {
                         <Nav.Link className='text-white' as={Link} to='/' >Home</Nav.Link>
                         <Nav.Link className='text-white' as={Link} to='/movies' >Movies</Nav.Link>
                         <Nav.Link className='text-white' as={Link} to='/series' >Tv Series</Nav.Link>                            
+                        <Nav.Link className='text-white' as={Link} to='/favorites' >My Favorites</Nav.Link>                            
                     </Nav>                 
                 </Navbar.Collapse>
             </Navbar>

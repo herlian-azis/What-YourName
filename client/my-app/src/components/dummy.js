@@ -5,5 +5,6 @@ export const flavourOptions = [
     { value: 'romance', label: 'romance', rating: 'crazy' },
     { value: 'animation', label: 'animation', rating: 'crazy' },
     { value: 'thriller', label: 'thriller', rating: 'crazy' },
+    { value: 'war', label: 'war', rating: 'crazy' },
   ];
   

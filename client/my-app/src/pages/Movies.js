@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Row, Col, Container, Button } from 'react-bootstrap'
-import Card from '../components/Card'
+import Card2 from '../components/Card'
 import { useQuery } from '@apollo/client';
 import { GET_MOVIES } from '../querys/GetMovies'
 import Modal from '../components/Modal'
@@ -51,7 +51,7 @@ const Movies = () => {
                     {data.movies.map((movie, idx) => {
                         return (
                             <Col md={3} className='mb-5'>
-                                <Card
+                                <Card2
                                     onPages={page => rowEvents(page)}
                                     key={idx} idx={idx} data={movie} />
                             </Col>

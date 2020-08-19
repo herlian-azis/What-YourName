@@ -1,8 +1,9 @@
 import React from 'react'
 import { Row, Col, Container } from 'react-bootstrap'
-import Card from '../components/Card'
 import { useQuery } from '@apollo/client';
 import { GET_SERIAL } from '../querys/GetSerial'
+import Card2 from '../components/Card'
+
 
 const Series =()=>{
     const { loading, error, data } = useQuery(GET_SERIAL);
@@ -20,7 +21,7 @@ const Series =()=>{
                     {data.tvSeries.map((serie,idx) => {
                         return (
                             <Col md={3}  className='mb-5'>
-                                <Card ket={serie.id} idx={idx} data={serie} />
+                                <Card2 ket={serie.id} idx={idx} data={serie} />
                             </Col>
                         )
                     })}
