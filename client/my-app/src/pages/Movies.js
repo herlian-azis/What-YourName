@@ -53,7 +53,7 @@ const Movies = () => {
                             <Col md={3} className='mb-5'>
                                 <Card2
                                     onPages={page => rowEvents(page)}
-                                    key={idx} idx={idx} data={movie} />
+                                    key={movie.id} idx={idx} data={movie} />
                             </Col>
                         )
                     })}

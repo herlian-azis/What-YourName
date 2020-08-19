@@ -15,7 +15,7 @@ export const GET_FAVORITES =gql`
 
 
 const client = new ApolloClient({
-  uri:`http://localhost:4000`,
+  uri:`http://localhost:2000`,
   cache: new InMemoryCache()
 });
 

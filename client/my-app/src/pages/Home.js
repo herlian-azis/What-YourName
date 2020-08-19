@@ -58,7 +58,7 @@ const Home = () => {
                         {data.movies.map((movie, idx) => {
                             return (
                                 <Col  >
-                                    <Card2 key={idx} idx={idx} data={movie}/>
+                                    <Card2 key={movie.id} idx={idx} data={movie}/>
                                 </Col>
                             )
                         })}
@@ -85,7 +85,7 @@ const Home = () => {
                             return (
                                 <React.Fragment>
                                     <Col >
-                                        <Card2 key={idx} idx={idx} data={serie}/>
+                                        <Card2 key={serie.id} idx={idx} data={serie}/>
                                     </Col>
                                 </React.Fragment>
                             )
